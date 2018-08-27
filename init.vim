@@ -34,17 +34,16 @@ set splitright
 nnoremap x "_x
 nnoremap s "_s
 
-nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
-
-inoremap <C-l> <Del>
-inoremap <C-k> <C-o>o
 inoremap <C-a> <Home>
+inoremap <C-b> <Left>
 inoremap <C-e> <End>
+inoremap <C-f> <Right>
+inoremap <C-g> <C-o>B<C-o>gUiw<C-o>E<Right>
+imap     <C-j> <Return>
+inoremap <C-k> <C-o>o
+inoremap <C-l> <Del>
 inoremap <C-v> <C-o><C-v>
 inoremap <C-y> <C-o>+<Right>
-inoremap <C-b> <Left>
-inoremap <C-f> <Right>
-imap <C-j> <Return>
 
 nnoremap <C-a> <Home>
 nnoremap <C-e> <End>
@@ -62,6 +61,8 @@ nnoremap K H
 nnoremap H K 
 nnoremap + <C-a>
 nnoremap - <C-x>
+
+let mapleader = "\<Space>"
 
 nnoremap Y y$
 set display=lastline
