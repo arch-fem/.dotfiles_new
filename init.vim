@@ -31,26 +31,63 @@ set splitbelow
 set splitright
 
 
+" Command-line mode keymappings:
+" <C-a>, A: move to head.
+cnoremap <C-a>          <Home>
+" <C-b>: previous char.
+cnoremap <C-b>          <Left>
+" <C-d>: delete char.
+cnoremap <C-d>          <Del>
+" <C-e>, E: move to end.
+cnoremap <C-e>          <End>
+" <C-f>: next char.
+cnoremap <C-f>          <Right>
+" <C-n>: next history.
+cnoremap <C-n>          <Down>
+" <C-p>: previous history.
+cnoremap <C-p>          <Up>
+" <C-y>: paste.
+cnoremap <C-y>          <C-r>*
+" <C-g>: Exit.
+cnoremap <C-g>          <C-c>
+
+" Smart <C-f>, <C-b>.
+noremap <expr> <C-f> max([winheight(0) - 2, 1])
+      \ . "\<C-d>" . (line('w$') >= line('$') ? "L" : "M")
+noremap <expr> <C-b> max([winheight(0) - 2, 1])
+      \ . "\<C-u>" . (line('w0') <= 1 ? "H" : "M")
+
+" Disable Ex-mode.
+nnoremap Q  q
+
 nnoremap x "_x
 nnoremap s "_s
+
+nnoremap > >>
+nnoremap < <<
+xnoremap > >gv
+xnoremap < <gv
 
 inoremap <C-a> <Home>
 inoremap <C-b> <Left>
 inoremap <C-e> <End>
-inoremap <C-f> <Right>
-inoremap <C-g> <C-o>B<C-o>gUiw<C-o>E<Right>
-imap     <C-j> <Return>
-inoremap <C-k> <C-o>o
+inoremap <silent> <C-f> <C-r>=lexima#insmode#leave(1, '<LT>C-G>U<LT>RIGHT>')<CR>
+inoremap <C-g> <C-o>b<C-o>gUiw<C-o>e<Right>
+inoremap <C-G> <C-o>b<C-o>guiw<C-o>e<Right>
+inoremap <C-u> <C-o>cc
+imap     <C-h> <BS>
+inoremap <C-j> <C-o>o
+inoremap <C-k> <C-o>O
 inoremap <C-l> <Del>
-inoremap <C-v> <C-o><C-v>
-inoremap <C-y> <C-o>+<Right>
+inoremap <C-v> <esc><C-v>
+inoremap <C-y> <Home>S<BS>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down> 
 
-nnoremap <C-a> <Home>
-nnoremap <C-e> <End>
-nnoremap <C-j> o<esc>
-nnoremap <C-k> O<esc>
-nnoremap <C-p> <C-y>
-nnoremap <C-n> <C-e>
+nnoremap <C-h> <Home>
+nnoremap <C-l> <End>
+nnoremap <C-j> o<esc><Up>
+nnoremap <C-k> O<esc><Down>
 nnoremap j gj
 nnoremap k gk
 nnoremap gj j
@@ -59,10 +96,6 @@ nnoremap J L
 nnoremap L J
 nnoremap K H
 nnoremap H K 
-nnoremap + <C-a>
-nnoremap - <C-x>
-
-let mapleader = "\<Space>"
 
 nnoremap Y y$
 set display=lastline
@@ -83,7 +116,7 @@ augroup MyTabStop
     autocmd BufNewFile,BufRead *.scala     setlocal tabstop=4 shiftwidth=4
     autocmd BufNewFile,BufRead *.rb        setlocal tabstop=2 shiftwidth=2
     autocmd BufNewFile,BufRead *.erb       setlocal tabstop=2 shiftwidth=2
-    autocmd BufNewFile,BufRead *.{c,cpp,h} setlocal tabstop=8 shiftwidth=8
+    autocmd BufNewFile,BufRead *.{c,cpp,h} setlocal tabstop=8 shiftwidth=8 noexpandtab
     autocmd BufNewFile,BufRead *.py        setlocal tabstop=4 shiftwidth=4
     autocmd BufNewFile,BufRead *.go        setlocal tabstop=4 shiftwidth=4
     autocmd BufNewFile,BufRead *.vim       setlocal tabstop=4 shiftwidth=4
@@ -98,4 +131,3 @@ augroup MyGitSpellCheck
     autocmd!
     autocmd FileType gitcommit setlocal spell
 augroup END
-
